@@ -23,3 +23,7 @@ export function addNote({ title, text }) {
 
   return true;
 }
+
+export function deleteNote(id) {
+  state.notes = state.notes.filter((item) => item.id !== id);
+}
