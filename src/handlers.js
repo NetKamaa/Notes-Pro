@@ -1,6 +1,13 @@
 import { elements } from "./elements.js";
 import { render } from "./render.js";
-import { addNote, deleteNote, state } from "./state.js";
+import {
+  addNote,
+  cancelEdit,
+  deleteNote,
+  saveEdit,
+  startEdit,
+  state,
+} from "./state.js";
 
 export function handleAddNote(e) {
   e.preventDefault();
@@ -24,10 +31,29 @@ export function handleNoteActions(e) {
   const id = card.dataset.id;
   if (e.target.classList.contains("btn-delete")) {
     deleteNote(id);
+    render(elements, state);
   }
 
   if (e.target.classList.contains("btn-edit")) {
+    startEdit(id);
+    render(elements, state);
   }
 
-  render(elements, state);
+  if (e.target.classList.contains("btn-cancel")) {
+    cancelEdit();
+    render(elements, state);
+  }
+
+  if (e.target.classList.contains("btn-save")) {
+    const title = card.querySelector(".edit-title").value;
+    const text = card.querySelector(".edit-text").value;
+
+    if (!title || !text) return;
+
+    const id = card.dataset.id;
+
+    saveEdit(id, { title, text });
+
+    render(elements, state);
+  }
 }
