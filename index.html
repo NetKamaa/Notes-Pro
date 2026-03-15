@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes-Pro</title>
+    <link rel="stylesheet" href="./main.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="app">
+      <form action="" class="form-ForNewNote">
+        <h2>New Note</h2>
+
+        <input class="title" name="title" placeholder="Title" />
+        <textarea
+          class="textarea-Text"
+          name="text"
+          placeholder="Text"
+        ></textarea>
+
+        <button class="btn-AddNewNote">Add</button>
+      </form>
+
+      <div class="error"></div>
+
+      <div class="notes-list"></div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
 </html>
