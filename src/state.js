@@ -9,6 +9,7 @@ export function addNote({ title, text }) {
     state.error = "Title and text are required";
     return;
   }
+
   const note = {
     id: crypto.randomUUID(),
     title: title,
@@ -16,6 +17,9 @@ export function addNote({ title, text }) {
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
+
   state.error = "";
   state.notes.unshift(note);
+
+  return true;
 }
