@@ -57,3 +57,44 @@ export function handleNoteActions(e) {
     render(elements, state);
   }
 }
+
+export function handleSortChange(e) {
+  const value = e.target.value;
+
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.sort = value;
+  state.error = "";
+
+  render(elements, state);
+}
+
+export function handleQueryChange(e) {
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.query = e.target.value.toLowerCase();
+
+  state.error = "";
+
+  render(elements, state);
+}
+
+export function handleReset(e) {
+  e.preventDefault();
+
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.sort = "updated-desc";
+  state.filter = "all";
+  state.query = "";
+
+  elements.queryTitle.value = "";
+
+  render(elements, state);
+}

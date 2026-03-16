@@ -2,6 +2,9 @@ export const state = {
   notes: [],
   error: "",
   editingId: null,
+  sort: "updated-desc",
+  filter: "all",
+  query: "",
 };
 
 export function addNote({ title, text }) {

@@ -26,7 +26,8 @@ button:hover {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 10px 12px;
 
@@ -39,7 +40,8 @@ textarea {
   line-height: 1.4;
 }
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: none;
   outline: 1px solid #00ffa6;
 }
@@ -90,4 +92,65 @@ textarea:focus-visible {
   display: flex;
   gap: 8px;
   margin-top: 10px;
+}
+
+.form-ForSortQuery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+  margin-bottom: 24px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.sort,
+.query-title,
+.reset {
+  width: 100%;
+}
+
+.sort,
+.reset {
+  min-height: 42px;
+}
+
+.sort:focus-visible,
+.query-title:focus-visible,
+.reset:focus-visible {
+  outline: none;
+  outline: 1px solid #00ffa6;
+}
+
+.empty-state {
+  padding: 24px 16px;
+  border: 1px dashed #ccc;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .form-ForSortQuery {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .sort {
+    width: 180px;
+    flex-shrink: 0;
+  }
+
+  .query-title {
+    flex: 1;
+  }
+
+  .reset {
+    width: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
 }

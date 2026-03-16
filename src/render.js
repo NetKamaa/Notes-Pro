@@ -1,9 +1,32 @@
+import { getVisibleNotes } from "./utils.js";
+
 export function render(elements, state) {
   elements.notesList.innerHTML = "";
 
+  if (!elements.sort.innerHTML) {
+    elements.sort.innerHTML = `
+  <option value="updated-desc">Newest first</option>
+  <option value="updated-asc">Oldest first</option>`;
+  }
+
+  elements.sort.value = state.sort;
+
   elements.error.textContent = state.error;
 
-  state.notes.forEach((note) => {
+  const visibleNotes = getVisibleNotes(state);
+
+  if (state.notes.length === 0) {
+    elements.notesList.innerHTML = '<p class="empty-state">No notes yet</p>';
+    return;
+  }
+
+  if (visibleNotes.length === 0) {
+    elements.notesList.innerHTML =
+      '<p class="empty-state">No results found</p>';
+    return;
+  }
+
+  visibleNotes.forEach((note) => {
     if (note.id === state.editingId) {
       const html = `
       <div class="note-card" data-id=${note.id}>
