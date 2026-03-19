@@ -42,9 +42,17 @@ export function cancelEdit() {
 export function saveEdit(id, { title, text }) {
   const note = state.notes.find((note) => note.id === id);
 
-  note.title = title;
-  note.text = text;
-  note.updatedAt = Date.now();
+  const oldTitle = note.title.trim();
+  const oldText = note.text.trim();
+
+  const newTitle = title.trim();
+  const newText = text.trim();
+
+  if (oldTitle !== newTitle || oldText !== newText) {
+    note.title = newTitle;
+    note.text = newText;
+    note.updatedAt = Date.now();
+  }
 
   state.editingId = null;
 }
