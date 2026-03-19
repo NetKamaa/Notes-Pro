@@ -16,3 +16,9 @@ export function getVisibleNotes(state) {
 
   return notes;
 }
+
+export function formatDate(date) {
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "Invalid Date";
+  return d.toLocaleString();
+}

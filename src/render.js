@@ -1,4 +1,4 @@
-import { getVisibleNotes } from "./utils.js";
+import { formatDate, getVisibleNotes } from "./utils.js";
 
 export function render(elements, state) {
   elements.notesList.innerHTML = "";
@@ -47,6 +47,7 @@ export function render(elements, state) {
       <div class="note-card" data-id=${note.id}>
         <h2>${note.title}</h2>
         <p>${note.text}</p>
+        <p class="created-at">Created at: ${formatDate(note.createdAt)}</p>${note.createdAt !== note.updatedAt ? `<p class="updated-at">Updated at: ${formatDate(note.updatedAt)}</p>` : ""}
         <div class="note-actions">
          <button class="btn-edit">Edit</button>
          <button class="btn-delete">Delete</button>
