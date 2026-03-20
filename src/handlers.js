@@ -4,7 +4,10 @@ import {
   addNote,
   cancelEdit,
   deleteNote,
+  resetFilter,
   saveEdit,
+  setQuery,
+  setSort,
   startEdit,
   state,
 } from "./state.js";
@@ -61,24 +64,15 @@ export function handleNoteActions(e) {
 export function handleSortChange(e) {
   const value = e.target.value;
 
-  if (state.editingId) {
-    cancelEdit();
-  }
-
-  state.sort = value;
-  state.error = "";
+  setSort(value);
 
   render(elements, state);
 }
 
 export function handleQueryChange(e) {
-  if (state.editingId) {
-    cancelEdit();
-  }
+  const value = e.target.value;
 
-  state.query = e.target.value.toLowerCase();
-
-  state.error = "";
+  setQuery(value);
 
   render(elements, state);
 }
@@ -86,13 +80,7 @@ export function handleQueryChange(e) {
 export function handleReset(e) {
   e.preventDefault();
 
-  if (state.editingId) {
-    cancelEdit();
-  }
-
-  state.sort = "updated-desc";
-  state.filter = "all";
-  state.query = "";
+  resetFilter();
 
   elements.queryTitle.value = "";
 

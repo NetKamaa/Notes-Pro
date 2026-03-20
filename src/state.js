@@ -56,3 +56,32 @@ export function saveEdit(id, { title, text }) {
 
   state.editingId = null;
 }
+
+export function setSort(value) {
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.sort = value;
+  state.error = "";
+}
+
+export function resetFilter() {
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.sort = "updated-desc";
+  state.filter = "all";
+  state.query = "";
+  state.error = "";
+}
+
+export function setQuery(value) {
+  if (state.editingId) {
+    cancelEdit();
+  }
+
+  state.query = value.toLowerCase();
+  state.error = "";
+}
