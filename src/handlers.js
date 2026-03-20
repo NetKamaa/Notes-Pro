@@ -64,7 +64,11 @@ export function handleNoteActions(e) {
     const title = card.querySelector(".edit-title").value;
     const text = card.querySelector(".edit-text").value;
 
-    if (!title || !text) return;
+    if (!title || !text) {
+      state.error = "Title and text are required";
+      renderApp(elements, state);
+      return;
+    }
 
     saveEdit(id, { title, text });
 

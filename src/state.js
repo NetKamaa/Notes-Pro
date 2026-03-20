@@ -7,6 +7,26 @@ export const state = {
   query: "",
 };
 
+const STATE_NOTES_KEY = "state:notes";
+
+export function loadNotes() {
+  const state_notes = localStorage.getItem(STATE_NOTES_KEY);
+
+  if (!state_notes) return;
+  try {
+    const data = JSON.parse(state_notes);
+    if (Array.isArray(data)) {
+      state.notes = data;
+    }
+  } catch {
+    state.notes = [];
+  }
+}
+
+function saveNotes() {
+  localStorage.setItem("state:notes", JSON.stringify(state.notes));
+}
+
 export function addNote({ title, text }) {
   if (!title || !text) {
     state.error = "Title and text are required";
@@ -24,11 +44,22 @@ export function addNote({ title, text }) {
   state.error = "";
   state.notes.unshift(note);
 
+  saveNotes();
+
   return true;
 }
 
 export function deleteNote(id) {
+  const exists = state.notes.some((n) => n.id === id);
+  if (!exists) return;
+
   state.notes = state.notes.filter((item) => item.id !== id);
+
+  if (state.editingId === id) {
+    state.editingId = null;
+  }
+
+  saveNotes();
 }
 
 export function startEdit(id) {
@@ -41,6 +72,7 @@ export function cancelEdit() {
 
 export function saveEdit(id, { title, text }) {
   const note = state.notes.find((note) => note.id === id);
+  if (!note) return;
 
   const oldTitle = note.title.trim();
   const oldText = note.text.trim();
@@ -55,6 +87,8 @@ export function saveEdit(id, { title, text }) {
   }
 
   state.editingId = null;
+
+  saveNotes();
 }
 
 export function setSort(value) {

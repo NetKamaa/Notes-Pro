@@ -8,10 +8,12 @@
   </head>
   <body>
     <div class="container app">
+      <h1>Notes</h1>
       <form action="" class="form-ForNewNote">
         <h2>New Note</h2>
 
-        <input class="title" name="title" placeholder="Title" />
+        <label for="title" class="visually-hidden">Title</label>
+        <input id="title" name="title" placeholder="Title" />
         <textarea
           class="textarea-Text"
           name="text"
@@ -27,7 +29,7 @@
         <button class="reset">Reset</button>
       </form>
 
-      <div class="error"></div>
+      <div class="error" aria-live="polite"></div>
 
       <div class="notes-list"></div>
     </div>

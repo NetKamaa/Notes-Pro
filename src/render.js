@@ -32,6 +32,10 @@ export function renderApp(elements, state) {
     elements.error.classList.remove("visible");
   }
 
+  if (state.editingId && !visibleNotes.some((n) => n.id === state.editingId)) {
+    state.editingId = null;
+  }
+
   visibleNotes.forEach((note) => {
     const html = getNoteHTML(note, note.id === state.editingId);
     elements.notesList.insertAdjacentHTML("beforeend", html);

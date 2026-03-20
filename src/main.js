@@ -7,9 +7,11 @@ import {
   handleSortChange,
 } from "./handlers.js";
 import { renderApp } from "./render.js";
-import { state } from "./state.js";
+import { loadNotes, state } from "./state.js";
 
 function init() {
+  loadNotes();
+
   elements.form.addEventListener("submit", handleAddNote);
   elements.notesList.addEventListener("click", handleNoteActions);
 
