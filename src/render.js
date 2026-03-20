@@ -1,6 +1,6 @@
-import { formatDate, getVisibleNotes } from "./utils.js";
+import { getVisibleNotes } from "./utils.js";
 
-export function render(elements, state) {
+export function renderApp(elements, state) {
   elements.notesList.innerHTML = "";
 
   if (!elements.sort.innerHTML) {
@@ -33,35 +33,43 @@ export function render(elements, state) {
   }
 
   visibleNotes.forEach((note) => {
-    if (note.id === state.editingId) {
-      const html = `
-      <div class="note-card" data-id=${note.id}>
-      <input class="edit-title" value="${note.title}" />
-
-        <textarea class="edit-text">${note.text}</textarea>
-        
-        <div class="note-actions">
-         <button class="btn-save">Save</button>
-         <button class="btn-cancel">Cancel</button>
-        </div>
-      </div>
-    `;
-
-      elements.notesList.insertAdjacentHTML("beforeend", html);
-    } else {
-      const html = `
-      <div class="note-card" data-id=${note.id}>
-        <h2>${note.title}</h2>
-        <p>${note.text}</p>
-        <p class="created-at">Created at: ${formatDate(note.createdAt)}</p>${note.createdAt !== note.updatedAt ? `<p class="updated-at">Updated at: ${formatDate(note.updatedAt)}</p>` : ""}
-        <div class="note-actions">
-         <button class="btn-edit">Edit</button>
-         <button class="btn-delete">Delete</button>
-        </div>
-      </div>
-    `;
-
-      elements.notesList.insertAdjacentHTML("beforeend", html);
-    }
+    const html = getNoteHTML(note, note.id === state.editingId);
+    elements.notesList.insertAdjacentHTML("beforeend", html);
   });
+}
+
+export function getNoteHTML(note, isEditing) {
+  if (isEditing) {
+    return `
+      <div class="note-card" data-id="${note.id}">
+        <input class="edit-title" value="${note.title}" />
+        <textarea class="edit-text">${note.text}</textarea>
+        <div class="note-actions">
+          <button class="btn-save">Save</button>
+          <button class="btn-cancel">Cancel</button>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="note-card" data-id="${note.id}">
+      <h2>${note.title}</h2>
+      <p>${note.text}</p>
+      <p class="created-at">Created at: ${new Date(note.createdAt).toLocaleString()}</p>
+      ${
+        note.createdAt !== note.updatedAt
+          ? `<p class="updated-at">Updated at: ${new Date(note.updatedAt).toLocaleString()}</p>`
+          : ""
+      }
+      <div class="note-actions">
+        <button class="btn-edit">Edit</button>
+        <button class="btn-delete">Delete</button>
+      </div>
+    </div>
+  `;
+}
+export function removeNoteFromDOM(id) {
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) el.remove();
 }

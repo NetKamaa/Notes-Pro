@@ -6,7 +6,7 @@ import {
   handleReset,
   handleSortChange,
 } from "./handlers.js";
-import { render } from "./render.js";
+import { renderApp } from "./render.js";
 import { state } from "./state.js";
 
 function init() {
@@ -17,7 +17,7 @@ function init() {
   elements.queryTitle.addEventListener("input", handleQueryChange);
   elements.reset.addEventListener("click", handleReset);
 
-  render(elements, state);
+  renderApp(elements, state);
 }
 
 init();

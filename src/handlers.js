@@ -1,5 +1,5 @@
 import { elements } from "./elements.js";
-import { render } from "./render.js";
+import { getNoteHTML, removeNoteFromDOM, renderApp } from "./render.js";
 import {
   addNote,
   cancelEdit,
@@ -21,7 +21,16 @@ export function handleAddNote(e) {
   const note = addNote({ title: title, text: text });
 
   if (note) {
-    render(elements, state);
+    const newNote = state.notes[0];
+
+    const html = getNoteHTML(newNote, false);
+
+    if (state.notes.length === 1) {
+      elements.notesList.innerHTML = "";
+    }
+
+    elements.notesList.insertAdjacentHTML("afterbegin", html);
+
     elements.form.reset();
   }
 }
@@ -34,17 +43,21 @@ export function handleNoteActions(e) {
   const id = card.dataset.id;
   if (e.target.classList.contains("btn-delete")) {
     deleteNote(id);
-    render(elements, state);
+    removeNoteFromDOM(id);
+
+    if (state.notes.length === 0) {
+      renderApp(elements, state);
+    }
   }
 
   if (e.target.classList.contains("btn-edit")) {
     startEdit(id);
-    render(elements, state);
+    renderApp(elements, state);
   }
 
   if (e.target.classList.contains("btn-cancel")) {
     cancelEdit();
-    render(elements, state);
+    renderApp(elements, state);
   }
 
   if (e.target.classList.contains("btn-save")) {
@@ -53,11 +66,18 @@ export function handleNoteActions(e) {
 
     if (!title || !text) return;
 
-    const id = card.dataset.id;
-
     saveEdit(id, { title, text });
 
-    render(elements, state);
+    const note = state.notes.find((note) => note.id === id);
+
+    const html = getNoteHTML(note, false);
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
+
+    const newCard = wrapper.firstElementChild;
+
+    card.replaceWith(newCard);
   }
 }
 
@@ -66,7 +86,7 @@ export function handleSortChange(e) {
 
   setSort(value);
 
-  render(elements, state);
+  renderApp(elements, state);
 }
 
 export function handleQueryChange(e) {
@@ -74,7 +94,7 @@ export function handleQueryChange(e) {
 
   setQuery(value);
 
-  render(elements, state);
+  renderApp(elements, state);
 }
 
 export function handleReset(e) {
@@ -84,5 +104,5 @@ export function handleReset(e) {
 
   elements.queryTitle.value = "";
 
-  render(elements, state);
+  renderApp(elements, state);
 }
