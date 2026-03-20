@@ -3,6 +3,19 @@
 *::after {
   box-sizing: border-box;
 }
+:root {
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --main-color: #00ffa6;
+}
+button {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 12px;
+  cursor: pointer;
+  border-color: var(--main-color);
+  background: #ffffff;
+}
 
 body {
   background: #f5f6f8;
@@ -14,22 +27,11 @@ textarea {
   min-height: 80px;
 }
 
-button {
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
 input,
 textarea,
 select {
   width: 100%;
-  padding: 10px 12px;
+  padding: var(--space-sm) 12px;
 
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -43,22 +45,25 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
-  outline: 1px solid #00ffa6;
+  outline: 1px solid var(--main-color);
 }
 
-.app {
+.container {
   max-width: 600px;
-  margin: 40px auto;
-  padding: 16px;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+.app {
+  margin-top: 40px;
 }
 
 .form-ForNewNote {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-md);
 
-  padding: 16px;
-  margin-bottom: 24px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
 
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -66,27 +71,35 @@ select:focus-visible {
 }
 .btn-AddNewNote {
   align-self: center;
+}
 
-  padding: 8px 14px;
+.error {
+  display: none;
 
-  border: none;
+  padding: var(--space-md);
+  border: 1px dashed #ccc;
   border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
 
-  background: #00ffa6;
-  color: black;
-
-  cursor: pointer;
+.error.visible {
+  display: block;
 }
 
 .note-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-md);
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
+  border-radius: var(--space-sm);
+  padding: var(--space-md);
   background: white;
+}
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
 }
 .note-card h2 {
   overflow-wrap: break-word;
@@ -112,17 +125,17 @@ select:focus-visible {
 }
 .note-actions {
   display: flex;
-  gap: 8px;
-  margin-top: 10px;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
 }
 
 .form-ForSortQuery {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-md);
 
-  padding: 16px;
-  margin-bottom: 24px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
 
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -144,11 +157,11 @@ select:focus-visible {
 .query-title:focus-visible,
 .reset:focus-visible {
   outline: none;
-  outline: 1px solid #00ffa6;
+  outline: 1px solid var(--main-color);
 }
 
 .empty-state {
-  padding: 24px 16px;
+  padding: var(--space-lg) var(--space-md);
   border: 1px dashed #ccc;
   border-radius: 12px;
   background: #fff;

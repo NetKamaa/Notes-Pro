@@ -11,8 +11,6 @@ export function render(elements, state) {
 
   elements.sort.value = state.sort;
 
-  elements.error.textContent = state.error;
-
   const visibleNotes = getVisibleNotes(state);
 
   if (state.notes.length === 0) {
@@ -24,6 +22,14 @@ export function render(elements, state) {
     elements.notesList.innerHTML =
       '<p class="empty-state">No results found</p>';
     return;
+  }
+
+  if (state.error) {
+    elements.error.textContent = state.error;
+    elements.error.classList.add("visible");
+  } else {
+    elements.error.textContent = "";
+    elements.error.classList.remove("visible");
   }
 
   visibleNotes.forEach((note) => {
